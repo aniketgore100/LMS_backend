@@ -14,36 +14,40 @@ const memberRoutes = require('./routes/member.routes');
 const paymentRoutes = require('./routes/payment.routes');
 const dashboardRoutes = require('./routes/dashboard.routes');
 
-const app = express();
-app.disable('x-powered-by');
+const createApp = ({ corsOptions } = {}) => {
+  const app = express();
+  app.disable('x-powered-by');
 
-// Security & utility middleware
-app.use(helmet());
-app.use(cors({ origin: env.CLIENT_URL, credentials: true }));
-app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true }));
-app.use('/api', apiLimiter);
+  // Security & utility middleware
+  app.use(helmet());
+  app.use(cors(corsOptions || {}));
+  app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+  app.use(express.json({ limit: '10mb' }));
+  app.use(express.urlencoded({ extended: true }));
+  app.use('/api', apiLimiter);
 
-// Serve static receipts
-app.use(`/${env.RECEIPTS_DIR}`, express.static(path.resolve(env.RECEIPTS_DIR)));
+  // Serve static receipts
+  app.use(`/${env.RECEIPTS_DIR}`, express.static(path.resolve(env.RECEIPTS_DIR)));
 
-// API Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/seats', seatRoutes);
-app.use('/api/members', memberRoutes);
-app.use('/api/payments', paymentRoutes);
-app.use('/api/dashboard', dashboardRoutes);
+  // API Routes
+  app.use('/api/auth', authRoutes);
+  app.use('/api/seats', seatRoutes);
+  app.use('/api/members', memberRoutes);
+  app.use('/api/payments', paymentRoutes);
+  app.use('/api/dashboard', dashboardRoutes);
 
-// Health check
-app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
+  // Health check
+  app.get('/health', (req, res) => res.json({ status: 'ok', timestamp: new Date() }));
 
-// 404 handler
-app.use((req, res) => {
-  res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
-});
+  // 404 handler
+  app.use((req, res) => {
+    res.status(404).json({ success: false, message: `Route ${req.originalUrl} not found` });
+  });
 
-// Error handler (must be last)
-app.use(errorHandler);
+  // Error handler (must be last)
+  app.use(errorHandler);
 
-module.exports = app;
+  return app;
+};
+
+module.exports = createApp;

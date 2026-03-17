@@ -14,7 +14,6 @@ const env = {
   FROM_NAME: process.env.FROM_NAME || 'LMS',
   RECEIPTS_DIR: process.env.RECEIPTS_DIR || 'receipts',
   UPLOADS_DIR: process.env.UPLOADS_DIR || 'uploads',
-  CLIENT_URL: process.env.CLIENT_URL || 'http://localhost:5173',
 };
 
 const required = ['JWT_SECRET', 'MONGODB_URI'];
