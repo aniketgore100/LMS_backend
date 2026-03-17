@@ -2,8 +2,7 @@ require('dotenv').config();
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://goreaniket100_db_user:hUxdr3tzI4OZrHVJ@lms1.vwnifpm.mongodb.net/';
-
+const MONGO_URI = process.env.MONGO_URI;
 const userSchema = new mongoose.Schema({
   name: String,
   email: { type: String, unique: true },
