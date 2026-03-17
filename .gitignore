@@ -1,0 +1,80 @@
+# Node modules
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Logs
+logs/
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+.env.*
+.env.example
+
+# Build folders
+dist/
+build/
+out/
+
+# Next.js / React
+.next/
+.cache/
+coverage/
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Parcel cache
+.cache/
+
+# Vite
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# MongoDB
+/data/db/
+
+# Uploads (if storing locally)
+uploads/
+public/uploads/
+
+# Firebase / AWS configs (if any)
+firebase-debug.log
+.firebase/
+.aws/
+
+# Temporary files
+tmp/
+temp/
+
+# Lock files (optional - keep if needed)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
