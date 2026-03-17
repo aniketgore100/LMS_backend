@@ -17,11 +17,21 @@ const dashboardRoutes = require('./routes/dashboard.routes');
 const createApp = ({ corsOptions } = {}) => {
   const app = express();
   app.disable('x-powered-by');
+  app.set('trust proxy', 1);
+
+  const morganStream = {
+    write: (message) => console.log(message.trim()),
+  };
 
   // Security & utility middleware
   app.use(helmet());
   app.use(cors(corsOptions || {}));
-  app.use(morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev'));
+  app.use(
+    morgan(env.NODE_ENV === 'production' ? 'combined' : 'dev', {
+      stream: morganStream,
+      skip: (req) => req.path === '/health',
+    })
+  );
   app.use(express.json({ limit: '10mb' }));
   app.use(express.urlencoded({ extended: true }));
   app.use('/api', apiLimiter);
